@@ -23,7 +23,7 @@ export default function PluginChecker() {
   const [plugins, setPlugins] = useState<string>("");
   const [results, setResults] = useState<Plugin[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [sortOption, setSortOption] = useState<SortOption>("newest");
+  const [sortOption] = useState<SortOption>("newest");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
