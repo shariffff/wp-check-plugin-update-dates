@@ -85,11 +85,11 @@ export default function PluginChecker() {
                 {sortedResults.map((plugin) => (
                   <TableRow
                     key={plugin.slug}
-                    className={plugin.error ? "opacity-20" : "text-sky-400"}
+                    className={plugin.error ? "opacity-20 " : "text-sky-400 "}
                   >
                     <TableCell>{plugin.name}</TableCell>
                     <TableCell>{plugin.slug}</TableCell>
-                    <TableCell className="text-violet-400">
+                    <TableCell className="text-violet-400 text-sm">
                       {plugin.error
                         ? "Not found"
                         : formatLastUpdated(plugin.last_updated)}
