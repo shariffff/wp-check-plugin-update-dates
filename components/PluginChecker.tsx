@@ -16,6 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import SimpleCopy from "@/components/simple-copy";
+import { CodeBlock } from "./code-block"
+import LinkIcon from "./ui/Link";
 
 
 type SortOption = "newest" | "oldest";
@@ -26,28 +28,74 @@ export default function PluginChecker() {
   const [isLoading, setIsLoading] = useState(false);
   const [sortOption] = useState<SortOption>("newest");
 
+  const exclude = [
+    'object-cache.php',
+    'hosting',
+    'wpmudev-updates',
+    'wp-defender',
+    'forminator-pro',
+    'wp-hummingbird',
+    'wpmu-dev-seo',
+    'wp-smush-pro',
+    'wpmudev_install-1081723',
+    'beehive-pro',
+    'beehive-analytics',
+    'branda-pro',
+    'hummingbird-pro',
+    'hustle-pro',
+    'shipper-pro',
+    'smartcrawl-pro',
+    'smush-pro',
+    'snapshot-pro',
+    'the-hub-client',
+    'wpmu-dev-dashboard',
+    'wpmu-dev-videos',
+    'forminator',
+    'branda-white-labeling',
+    'broken-link-checker',
+    'defender-security',
+    'hummingbird-performance',
+    'wordpress-popup',
+    'smartcrawl-seo',
+    'wp-smushit',
+    'shipper',
+    'snapshot-backups',
+    'wpmudev-videos',
+    'ultimate-branding',
+    'hustle'
+  ];
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const pluginSlugs = plugins
+    // Get plugins from textarea and URL query param
+    const queryParams = new URLSearchParams(window.location.search);
+    const queryPlugins = queryParams.get('plugins')?.split(',') || [];
+
+    const pluginSlugs = [...plugins
       .split("\n")
       .map((slug) => slug.trim())
-      .filter(Boolean);
+      .filter(Boolean),
+    ...queryPlugins
+    ]
+      .filter(slug => !exclude.includes(slug)); // Filter out excluded plugins
+
     const data = await fetchPluginData(pluginSlugs);
     setResults(data);
     setIsLoading(false);
   };
 
   const sortedResults = useMemo(() => {
-    return [...results].sort((a, b) => {
-      if (a.error && !b.error) return 1;
-      if (!a.error && b.error) return -1;
-      const dateA = new Date(formatLastUpdated(a.last_updated)).getTime();
-      const dateB = new Date(formatLastUpdated(b.last_updated)).getTime();
-      return sortOption === "newest" ? dateB - dateA : dateA - dateB;
-    });
-  }, [results, sortOption]);
+    return [...results];
+  }, [results]);
 
+  const errorPlugins = useMemo(() => {
+    return sortedResults
+      .filter(plugin => plugin.error)
+      .map(plugin => plugin.slug)
+      .join('\n');
+  }, [sortedResults]);
   return (
     <Card>
       <CardHeader>
@@ -57,9 +105,9 @@ export default function PluginChecker() {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Textarea
-            value={plugins}
+            value={plugins || new URLSearchParams(window.location.search).get('plugins')?.replace(/,/g, '\n')}
             onChange={(e) => setPlugins(e.target.value)}
-            placeholder="Enter plugin slugs, one per line (e.g., contact-form-7)"
+            placeholder="Enter plugin slugs, one per line (e.g., contact-form-7) or use ?plugins=slug1,slug2 in URL"
             className="min-h-[100px]"
             required
           />
@@ -84,25 +132,22 @@ export default function PluginChecker() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {sortedResults.map((plugin) => (
+                {sortedResults.filter(plugin => !plugin.error).map((plugin) => (
                   <TableRow
                     key={plugin.slug}
-                    className={plugin.error ? "opacity-20 " : "text-sky-400 "}
+                    className="text-sky-400"
                   >
                     <TableCell>{plugin.name}</TableCell>
                     <TableCell>{plugin.slug}</TableCell>
-                    <TableCell className="text-violet-400 ">
-                      {plugin.error
-                        ? "Not found"
-                        : formatLastUpdated(plugin.last_updated)}
+                    <TableCell className="text-violet-400">
+                      {formatLastUpdated(plugin.last_updated)}
                     </TableCell>
                     <TableCell>
-                      { plugin.error ? "" :    <Button variant="link">
+                      <Button variant="link">
                         <a href={`https://wordpress.org/plugins/${plugin.slug}`} target="_blank" rel="noopener noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+                          <LinkIcon />
                         </a>
-
-                      </Button>        }
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -110,6 +155,16 @@ export default function PluginChecker() {
             </Table>
           </div>
         )}
+        {
+          errorPlugins && (
+            <div className="mt-4">
+              <h6 className="text-sm py-3">List of premium plugins</h6>
+              <CodeBlock code={errorPlugins} />
+            </div>
+
+          )
+        }
+
       </CardContent>
     </Card>
   );

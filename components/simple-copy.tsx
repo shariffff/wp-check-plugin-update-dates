@@ -1,30 +1,36 @@
 
 import { CodeBlock } from "./code-block"
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-const jsCode = `console.log([...document.querySelectorAll("#the-list tr[data-slug]")].map(row => row.getAttribute("data-slug")).join("\\n"));`
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
+const jsCode = "window.open(`https://plugin-status.vercel.app/?plugins=${[...document.querySelectorAll('#the-list tr[data-slug]')].map(r=>r.getAttribute('data-slug')).join(',')}`,'_blank');"
+
 
 const bashCode = `wp plugin list --field=name`
 
 export default function SimpleCopy() {
   return (
+    <>
+      <Drawer>
+        <DrawerTrigger className="text-xs text-blue-400 inline-flex">How to get the plugins list?</DrawerTrigger>
+        <DrawerContent>
+          <div className="max-w-5xl mx-auto">
+            <div className="mt-4">
+              <h3 className="text-xs mb-2">JavaScript - Visit the Installed plugins page and  paste the code into the browser's console</h3>
+              <CodeBlock code={jsCode} />
+            </div>
+            <div className="my-4">
+              <h3 className="text-xs mb-2">WP CLI</h3>
+              <CodeBlock code={bashCode} />
+            </div>
+          </div>
+        </DrawerContent>
+      </Drawer>
 
-<Collapsible>
-  <CollapsibleTrigger className="text-blue-400 text-xs">How to get the plugins list?</CollapsibleTrigger>
-  <CollapsibleContent>
-  <div className="mt-4">
-          <h3 className="text-xs mb-2">JavaScript - Visit the Installed plugins page and  paste the code into the browser's console</h3>
-          <CodeBlock code={jsCode} />
-        </div>
-        <div className="mt-4">
-          <h3 className="text-xs mb-2">WP CLI</h3>
-          <CodeBlock code={bashCode} />
-        </div>
-  </CollapsibleContent>
-</Collapsible>
+    </>
 
 
   )
