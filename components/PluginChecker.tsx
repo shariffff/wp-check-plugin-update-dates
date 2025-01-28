@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import SimpleCopy from "@/components/simple-copy";
 
 
 type SortOption = "newest" | "oldest";
@@ -51,6 +52,7 @@ export default function PluginChecker() {
     <Card>
       <CardHeader>
         <CardTitle>Check WordPress Plugin Update Dates</CardTitle>
+        <SimpleCopy></SimpleCopy>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
