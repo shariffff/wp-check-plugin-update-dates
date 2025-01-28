@@ -20,13 +20,11 @@ import { CodeBlock } from "./code-block"
 import LinkIcon from "./ui/Link";
 
 
-type SortOption = "newest" | "oldest";
 
 export default function PluginChecker() {
   const [plugins, setPlugins] = useState<string>("");
   const [results, setResults] = useState<Plugin[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [sortOption] = useState<SortOption>("newest");
 
   const exclude = [
     'object-cache.php',
