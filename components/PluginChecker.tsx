@@ -67,15 +67,17 @@ export default function PluginChecker() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // // Get plugins from textarea and URL query param
-    // const queryParams = new URLSearchParams(window?.location?.search);
-    // const queryPlugins = queryParams.get('plugins')?.split(',') || [];
+    const queryParams = typeof window !== 'undefined'
+      ? new URLSearchParams(window.location.search)
+      : new URLSearchParams('');
+
+    const queryPlugins = queryParams.get('plugins')?.split(',') || [];
 
     const pluginSlugs = [...plugins
       .split("\n")
       .map((slug) => slug.trim())
       .filter(Boolean),
-      // ...queryPlugins
+    ...queryPlugins
     ]
       .filter(slug => !exclude.includes(slug)); // Filter out excluded plugins
 
