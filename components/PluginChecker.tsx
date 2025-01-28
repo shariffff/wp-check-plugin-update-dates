@@ -67,15 +67,15 @@ export default function PluginChecker() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Get plugins from textarea and URL query param
-    const queryParams = new URLSearchParams(window?.location?.search);
-    const queryPlugins = queryParams.get('plugins')?.split(',') || [];
+    // // Get plugins from textarea and URL query param
+    // const queryParams = new URLSearchParams(window?.location?.search);
+    // const queryPlugins = queryParams.get('plugins')?.split(',') || [];
 
     const pluginSlugs = [...plugins
       .split("\n")
       .map((slug) => slug.trim())
       .filter(Boolean),
-    ...queryPlugins
+      // ...queryPlugins
     ]
       .filter(slug => !exclude.includes(slug)); // Filter out excluded plugins
 
@@ -103,7 +103,9 @@ export default function PluginChecker() {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Textarea
-            value={plugins || new URLSearchParams(window?.location?.search).get('plugins')?.replace(/,/g, '\n')}
+            value={plugins || (typeof window !== 'undefined'
+              ? new URLSearchParams(window.location.search).get('plugins')?.replace(/,/g, '\n')
+              : '')}
             onChange={(e) => setPlugins(e.target.value)}
             placeholder="Enter plugin slugs, one per line (e.g., contact-form-7) or use ?plugins=slug1,slug2 in URL"
             className="min-h-[100px]"
