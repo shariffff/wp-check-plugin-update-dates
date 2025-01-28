@@ -16,11 +16,11 @@ export default function SimpleCopy() {
   <CollapsibleTrigger className="text-blue-400 text-xs">How to get the plugins list?</CollapsibleTrigger>
   <CollapsibleContent>
   <div className="mt-4">
-          <h3 className="text-xs font-semibold mb-2">JavaScript - Visit the Installed plugins page and  paste the code into the browser's console</h3>
+          <h3 className="text-xs mb-2">JavaScript - Visit the Installed plugins page and  paste the code into the browser's console</h3>
           <CodeBlock code={jsCode} />
         </div>
-        <div>
-          <h3 className="text-xs font-semibold mb-2">WP CLI</h3>
+        <div className="mt-4">
+          <h3 className="text-xs mb-2">WP CLI</h3>
           <CodeBlock code={bashCode} />
         </div>
   </CollapsibleContent>

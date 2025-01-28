@@ -74,7 +74,7 @@ export default function PluginChecker() {
               <h2 className="text-xl font-semibold">Results:</h2>
 
             </div>
-            <Table>
+            <Table className="text-sm">
               <TableHeader>
                 <TableRow>
                   <TableHead>Plugin Name</TableHead>
@@ -91,7 +91,7 @@ export default function PluginChecker() {
                   >
                     <TableCell>{plugin.name}</TableCell>
                     <TableCell>{plugin.slug}</TableCell>
-                    <TableCell className="text-violet-400 text-sm">
+                    <TableCell className="text-violet-400 ">
                       {plugin.error
                         ? "Not found"
                         : formatLastUpdated(plugin.last_updated)}
