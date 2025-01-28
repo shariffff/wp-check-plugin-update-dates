@@ -5,7 +5,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-const jsCode = `console.log([...document.querySelectorAll('#the-list tr[data-slug]')].map(row => row.getAttribute('data-slug')).join('\\n'));`
+const jsCode = `console.log([...document.querySelectorAll("#the-list tr[data-slug]")].map(row => row.getAttribute("data-slug")).join("\\n"));`
 
 const bashCode = `wp plugin list --field=name`
 
