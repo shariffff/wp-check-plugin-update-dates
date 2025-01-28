@@ -103,7 +103,7 @@ export default function PluginChecker() {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Textarea
-            value={plugins || new URLSearchParams(window.location.search).get('plugins')?.replace(/,/g, '\n')}
+            value={plugins || new URLSearchParams(window?.location?.search).get('plugins')?.replace(/,/g, '\n')}
             onChange={(e) => setPlugins(e.target.value)}
             placeholder="Enter plugin slugs, one per line (e.g., contact-form-7) or use ?plugins=slug1,slug2 in URL"
             className="min-h-[100px]"
