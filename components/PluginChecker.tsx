@@ -68,7 +68,7 @@ export default function PluginChecker() {
     e.preventDefault();
     setIsLoading(true);
     // Get plugins from textarea and URL query param
-    const queryParams = new URLSearchParams(window.location.search);
+    const queryParams = new URLSearchParams(window?.location?.search);
     const queryPlugins = queryParams.get('plugins')?.split(',') || [];
 
     const pluginSlugs = [...plugins
