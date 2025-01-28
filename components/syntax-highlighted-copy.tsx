@@ -15,14 +15,13 @@ export default function SyntaxHighlightedCopy() {
       <CardContent className="space-y-4">
         <div>
           <h3 className="text-lg font-semibold mb-2">JavaScript</h3>
-          <CodeBlock code={jsCode} language="javascript" />
+          <CodeBlock code={jsCode}  />
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Bash</h3>
-          <CodeBlock code={bashCode} language="bash" />
+          <CodeBlock code={bashCode} />
         </div>
       </CardContent>
     </Card>
   )
 }
-
