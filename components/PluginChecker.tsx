@@ -18,6 +18,7 @@ import {
 import SimpleCopy from "@/components/simple-copy";
 import { CodeBlock } from "./code-block"
 import LinkIcon from "./ui/Link";
+import { ModeSwitch } from "./mode-switch";
 
 
 
@@ -90,17 +91,27 @@ export default function PluginChecker() {
     return [...results];
   }, [results]);
 
-  const errorPlugins = useMemo(() => {
-    return sortedResults
-      .filter(plugin => plugin.error)
-      .map(plugin => plugin.slug)
-      .join('\n');
+  const premiumPlugins = useMemo(() => {
+    return [...new Set(
+      sortedResults
+        .filter(plugin => plugin.error)
+        .map(plugin => plugin.slug)
+    )].join('\n');
   }, [sortedResults]);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Check WordPress Plugin Update Dates</CardTitle>
-        <SimpleCopy></SimpleCopy>
+        <div className="flex justify-between">
+          <div>
+            <CardTitle>Check WordPress Plugin Update Dates</CardTitle>
+            <SimpleCopy></SimpleCopy>
+          </div>
+          <div>
+            <ModeSwitch />
+          </div>
+        </div>
+
+
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -128,7 +139,6 @@ export default function PluginChecker() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Plugin Name</TableHead>
-                  <TableHead>Slug</TableHead>
                   <TableHead>Last Updated</TableHead>
                   <TableHead>Link</TableHead>
                 </TableRow>
@@ -140,7 +150,6 @@ export default function PluginChecker() {
                     className="text-sky-400"
                   >
                     <TableCell>{plugin.name}</TableCell>
-                    <TableCell>{plugin.slug}</TableCell>
                     <TableCell className="text-violet-400">
                       {formatLastUpdated(plugin.last_updated)}
                     </TableCell>
@@ -158,10 +167,10 @@ export default function PluginChecker() {
           </div>
         )}
         {
-          errorPlugins && (
+          premiumPlugins && (
             <div className="mt-4">
               <h6 className="text-sm py-3">List of premium plugins</h6>
-              <CodeBlock code={errorPlugins} />
+              <CodeBlock code={premiumPlugins} />
             </div>
 
           )
