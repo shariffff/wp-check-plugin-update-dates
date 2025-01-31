@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import SimpleCopy from "@/components/simple-copy";
+import HelpBar from "@/components/help-bar";
 import { CodeBlock } from "./code-block"
 import LinkIcon from "./ui/Link";
 import { ModeSwitch } from "./mode-switch";
@@ -97,7 +97,7 @@ export default function PluginChecker() {
         <div className="flex justify-between">
           <div>
             <CardTitle>Check WordPress Plugin Update Dates</CardTitle>
-            <SimpleCopy></SimpleCopy>
+            <HelpBar></HelpBar>
           </div>
           <div>
             <ModeSwitch />
