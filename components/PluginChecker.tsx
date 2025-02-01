@@ -30,9 +30,22 @@ export default function PluginChecker() {
   // The slugs differ between the UI and CLI,
   //  which is why this list is extensive.
   const exclude = [
+    "beehive-pro",
+    "branda-pro",
+    "wpmudev_install-1081723",
+    "wp-defender",
+    "forminator-pro",
+    "hummingbird-pro",
+    "hustle-pro",
+    "shipper-pro",
+    "smartcrawl-pro",
+    "wpmudev_install-912164",
+    "snapshot-pro",
+    "the-hub-client",
+    "wpmu-dev-dashboard",
+    "wpmu-dev-videos",
     "beehive-analytics",
     "ultimate-branding",
-    "wp-defender",
     "forminator",
     "wp-hummingbird",
     "hustle",
@@ -42,20 +55,9 @@ export default function PluginChecker() {
     "snapshot-backups",
     "the-hub-client",
     "wpmudev-updates",
-    "wpmu-dev-videos",
+    "wpmudev-videos",
     "hosting",
-    "object-cache.php",
-    "beehive-pro",
-    "branda-pro",
-    "defender-pro",
-    "forminator-pro",
-    "hummingbird-pro",
-    "hustle-pro",
-    "shipper-pro",
-    "smartcrawl-pro",
-    "wpmudev_install-912164",
-    "snapshot-pro",
-    "wpmu-dev-dashboard"
+    'object-cache.php'
   ];
 
 
