@@ -27,7 +27,8 @@ export default function PluginChecker() {
   const [results, setResults] = useState<Plugin[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // The slugs differ between the UI and CLI, which is why this list is extensive.
+  // The slugs differ between the UI and CLI,
+  //  which is why this list is extensive.
   const exclude = [
     "beehive-analytics",
     "ultimate-branding",
@@ -87,7 +88,7 @@ export default function PluginChecker() {
   const premiumPlugins = useMemo(() => {
     return [...new Set(
       sortedResults
-        .filter(plugin => plugin.error)
+        .filter(plugin => plugin.premium)
         .map(plugin => plugin.slug)
     )].join('\n');
   }, [sortedResults]);
@@ -133,11 +134,12 @@ export default function PluginChecker() {
                 <TableRow>
                   <TableHead>Plugin Name</TableHead>
                   <TableHead>Last Updated</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Link</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {sortedResults.filter(plugin => !plugin.error).map((plugin) => (
+                {sortedResults.filter(plugin => !plugin.premium).map((plugin) => (
                   <TableRow
                     key={plugin.slug}
                     className="text-sky-400"
@@ -145,6 +147,11 @@ export default function PluginChecker() {
                     <TableCell>{plugin.name}</TableCell>
                     <TableCell className="text-violet-400">
                       {formatLastUpdated(plugin.last_updated)}
+                    </TableCell>
+                    <TableCell>
+                      {plugin.isClosed ? (
+                        <span className="text-red-500">Closed</span>
+                      ) : 'Active'}
                     </TableCell>
                     <TableCell>
                       <Button variant="link">

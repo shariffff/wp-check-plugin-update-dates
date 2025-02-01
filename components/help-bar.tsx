@@ -1,5 +1,3 @@
-
-import LinkIcon from "./ui/Link";
 import { CodeBlock } from "./code-block"
 import {
   Drawer,

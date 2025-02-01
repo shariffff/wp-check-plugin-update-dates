@@ -3,6 +3,5 @@ export interface Plugin {
   name: string
   last_updated: string
   isClosed: boolean
-  error: boolean
+  premium: boolean
 }
-
