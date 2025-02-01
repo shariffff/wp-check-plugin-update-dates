@@ -57,7 +57,8 @@ export default function PluginChecker() {
     "wpmudev-updates",
     "wpmudev-videos",
     "hosting",
-    'object-cache.php'
+    'object-cache.php',
+    "smush-pro"
   ];
 
 
